@@ -19,8 +19,10 @@ export const isUpdate = functions.https.onRequest((req, res) => {
             // console.log("element = " + element + ". isSame? " + element == nowVersion);
             if (element == nowVersion) have2Update = true;
         });
-        res.status(200).send(new Response(have2Update, nowVersion));
-    })
+        res.status(200).json(new Response(have2Update, nowVersion)).end();
+    }).catch(error => {
+        res.status(500).end();
+    });
 })
 
 class Response {
@@ -31,12 +33,3 @@ class Response {
         this.nowVersion = nowVersion
     }
 }
-
-
-
-// // Start writing Firebase Functions
-// // https://firebase.google.com/docs/functions/typescript
-//
-// export const helloWorld = functions.https.onRequest((request, response) => {
-//  response.send("Hello from Firebase!");
-// });
